@@ -1,0 +1,38 @@
+# 워크플로우의 이름을 정의합니다. GitHub Actions 로그와 UI에서 이 이름이 표시됩니다.
+name: NestJS application test
+
+# 이 워크플로우가 어떤 GitHub 이벤트에 의해 트리거될지 정의합니다.
+# 여기서는 'push' 이벤트와 'pull_request' 이벤트에 대해 워크플로우가 실행됩니다.
+on: [push, pull_request]
+
+# 워크플로우에서 실행할 작업을 정의합니다.
+jobs:
+  build:
+    # 워크플로우가 실행될 가상 환경을 지정합니다. 여기서는 Ubuntu 22.04를 사용합니다.
+    runs-on: ubuntu-22.04
+
+    # 워크플로우에서 실행할 단계들을 정의합니다.
+    steps:
+      - uses: actions/checkout@v2
+        # 첫 번째 단계: GitHub 리포지토리를 체크아웃합니다.
+        # 이는 워크플로우가 리포지토리의 코드에 접근할 수 있게 해줍니다.
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        # 두 번째 단계: Node.js 환경을 설정합니다.
+        with:
+          node-version: '20.10.0'
+          # Node.js의 버전을 지정합니다.
+          # 이 예시에서는 '20.10.0' 버전을 사용합니다.
+
+      - name: Install dependencies
+        run: |
+          npm install
+        # 세 번째 단계: 프로젝트의 의존성을 설치합니다.
+        # 'npm install' 명령어를 사용하여 필요한 노드 모듈을 설치합니다.
+
+      - name: Run tests
+        run: |
+          npm test
+        # 네 번째 단계: 테스트를 실행합니다.
+        # 'npm test' 명령어를 사용하여 정의된 테스트 케이스를 실행합니다.
